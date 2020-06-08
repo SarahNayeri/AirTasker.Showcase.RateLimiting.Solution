@@ -47,12 +47,12 @@ namespace AirTasker.Showcase.RateLimit.DataAccess
             }
         }
 
-        public List<UserLog> GetUserLogs(string userId, double IntervalInSeconds, DateTime date)
+        public List<UserLog> GetUserLogsWithinInterval(string userId, double IntervalInSeconds, DateTime date)
         {
             using (var context = new UserDbContext(ContextOptions))
             {
                 return context.UserLogs.Where(x => x.UserId == userId
-            && x.RequestTime >= date.AddSeconds(-1 * IntervalInSeconds)).OrderBy(x => x.RequestTime).ToList();
+            && x.RequestTime >= date.AddSeconds(-1 * IntervalInSeconds)).ToList();
             }
         }
     }

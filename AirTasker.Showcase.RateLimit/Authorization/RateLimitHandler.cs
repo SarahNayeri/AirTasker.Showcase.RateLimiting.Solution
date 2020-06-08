@@ -1,9 +1,11 @@
 ﻿using AirTasker.Showcase.RateLimit.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+[assembly: InternalsVisibleToAttribute("AirTasker.Showcase.RateLimit.XUnitTest")]
 namespace AirTasker.Showcase.RateLimit.Authorization
 {
     public class RateLimitHandler : AuthorizationHandler<RateLimitRequirement>

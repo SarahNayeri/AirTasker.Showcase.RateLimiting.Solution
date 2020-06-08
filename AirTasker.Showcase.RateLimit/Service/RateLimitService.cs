@@ -13,9 +13,9 @@ namespace AirTasker.Showcase.RateLimit.Service
         }
         public double GetWaitingTime(string userId, int rateLimit, double IntervalInSeconds, DateTime date)
         {
-            var userlog = _repository.GetUserLogs(userId, IntervalInSeconds, date);
+            var userlog = _repository.GetUserLogsWithinInterval(userId, IntervalInSeconds, date)?.OrderBy(x=>x.RequestTime);
             double waitingTime = 0;
-            if (userlog.Count() >= rateLimit)
+            if (userlog?.Count() >= rateLimit)
             {
                 waitingTime = Math.Round(IntervalInSeconds - (date - userlog.First().RequestTime).TotalSeconds);
             }
