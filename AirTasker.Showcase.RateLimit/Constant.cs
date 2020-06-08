@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace AirTasker.Showcase.RateLimit
+﻿namespace AirTasker.Showcase.RateLimit
 {
     public class Constant
     {
         public const double IntervalInSecond = 3600;
-        public const int MaxRate = 100;
+        public const int MaxRate = 125;
     }
 
     public class TempConstant

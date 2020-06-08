@@ -1,6 +1,7 @@
 ﻿using AirTasker.Showcase.RateLimit.Service;
 using Microsoft.AspNetCore.Authorization;
-using System;
+using Microsoft.AspNetCore.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace AirTasker.Showcase.RateLimit.Authorization
@@ -8,18 +9,25 @@ namespace AirTasker.Showcase.RateLimit.Authorization
     public class RateLimitHandler : AuthorizationHandler<RateLimitRequirement>
     {
         private readonly IRateLimitService _rateLimitService;
+        private readonly IHttpContextAccessor _accessor;
+        private readonly IDateTimeService _dateTimeService;
 
-        public RateLimitHandler(IRateLimitService rateLimitService)
+        public RateLimitHandler(IRateLimitService rateLimitService, IHttpContextAccessor accessor, IDateTimeService dateTimeService)
         {
             _rateLimitService = rateLimitService;
+            _accessor = accessor;
+            _dateTimeService = dateTimeService;
         }
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, RateLimitRequirement requirement)
         {
-            var utcnow = DateTime.UtcNow;
-            _rateLimitService.SetRateLimit(context.User.Identity.Name, requirement.RateLimit, requirement.Interval, utcnow);
-            if (_rateLimitService.GetWaitingTime(context.User.Identity.Name) > 0)
+            var utcnow = _dateTimeService.GetUTC();
+            var waitingtime = _rateLimitService.GetWaitingTime(context.User.Identity.Name, requirement.RateLimit, requirement.Interval, utcnow);
+            if (waitingtime > 0)
             {
                 context.Fail();
+                _accessor.HttpContext.Response.StatusCode = 429;
+                _accessor.HttpContext.Response.Body.WriteAsync(
+                    Encoding.UTF8.GetBytes($"Rate limit exceeded. Try again in #{waitingtime} seconds"));
             }
             else
             {

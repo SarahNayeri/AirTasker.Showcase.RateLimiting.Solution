@@ -4,8 +4,7 @@ namespace AirTasker.Showcase.RateLimit.Service
 {
     public interface IRateLimitService
     {
-        void SetRateLimit(string userId, int rateLimit, double IntervalInSeconds, DateTime nowutc);
-        double GetWaitingTime(string userId);
+        double GetWaitingTime(string userId, int rateLimit, double IntervalInSeconds, DateTime date);
         void AddUserLog(string userId, DateTime nowutc);
     }
 }

@@ -1,20 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AirTasker.Showcase.RateLimit.Authorization;
 using AirTasker.Showcase.RateLimit.DataAccess;
 using AirTasker.Showcase.RateLimit.Service;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace AirTasker.Showcase.RateLimit
 {
@@ -33,6 +26,8 @@ namespace AirTasker.Showcase.RateLimit
             services.AddSingleton<IRepository, Repository>();
             services.AddSingleton<IAuthorizationHandler, RateLimitHandler>();
             services.AddSingleton<IRateLimitService, RateLimitService>();
+            services.AddSingleton<IDateTimeService, DateTimeService>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("RateLimitPolicy", policy =>

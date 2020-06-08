@@ -6,8 +6,7 @@ namespace AirTasker.Showcase.RateLimit.DataAccess
     {
         public UserDbContext(DbContextOptions<UserDbContext> options)
             : base(new DbContextOptionsBuilder<UserDbContext>()
-                    .UseInMemoryDatabase("TestDatabase")
-                    .Options)
+                    .UseInMemoryDatabase("TestDatabase").Options)
         {
 
         }

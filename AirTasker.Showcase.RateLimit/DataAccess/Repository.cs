@@ -9,7 +9,6 @@ namespace AirTasker.Showcase.RateLimit.DataAccess
     {
         protected DbContextOptions<UserDbContext> ContextOptions { get; }
 
-
         public Repository()
         {
             ContextOptions = new DbContextOptionsBuilder<UserDbContext>()
