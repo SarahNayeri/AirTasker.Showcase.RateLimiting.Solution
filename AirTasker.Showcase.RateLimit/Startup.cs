@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace AirTasker.Showcase.RateLimit
 {
@@ -39,6 +40,10 @@ namespace AirTasker.Showcase.RateLimit
                 options.DefaultChallengeScheme = "RateLimitScheme";
                 options.AddScheme<RateLimitSchemeHandler>("RateLimitScheme", "RateLimitScheme");
             });
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AirTasker Showcase API", Version = "v1" });
+            });
             services.AddControllers();
         }
 
@@ -51,6 +56,12 @@ namespace AirTasker.Showcase.RateLimit
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AirTasker Showcase API");
+            });
 
             app.UseRouting();
 

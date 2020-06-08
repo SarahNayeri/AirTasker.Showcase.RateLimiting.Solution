@@ -24,7 +24,7 @@ namespace AirTasker.Showcase.RateLimit.DataAccess
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
                 var userList = new List<UserLog>();
-                for (var i = 1; i < 110; i++)
+                for (var i = 1; i < 98; i++)
                 {
                     userList.Add(new UserLog
                     {
