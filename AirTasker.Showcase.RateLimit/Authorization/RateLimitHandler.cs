@@ -26,7 +26,6 @@ namespace AirTasker.Showcase.RateLimit.Authorization
             var waitingtime = _rateLimitService.GetWaitingTime(context.User.Identity.Name, requirement.RateLimit, requirement.Interval, utcnow);
             if (waitingtime > 0)
             {
-                context.Fail();
                 _accessor.HttpContext.Response.StatusCode = 429;
                 _accessor.HttpContext.Response.Body.WriteAsync(
                     Encoding.UTF8.GetBytes($"Rate limit exceeded. Try again in #{waitingtime} seconds"));

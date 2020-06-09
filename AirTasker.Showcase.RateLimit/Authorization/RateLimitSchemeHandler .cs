@@ -7,10 +7,6 @@ namespace AirTasker.Showcase.RateLimit.Authorization
 {
     public class RateLimitSchemeHandler : IAuthenticationHandler
     {
-
-        public RateLimitSchemeHandler(IRateLimitService rateLimitService)
-        {
-        }
         public Task InitializeAsync(AuthenticationScheme scheme, HttpContext context)
         {
             return Task.CompletedTask;
