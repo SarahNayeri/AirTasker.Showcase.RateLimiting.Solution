@@ -11,7 +11,6 @@ namespace AirTasker.Showcase.RateLimit.XUnitTest
     {
         private readonly Mock<IRepository> _repository;
         private readonly RateLimitService _rateLimitService;
-
         public RateLimitServiceTest()
         {
             _repository = new Mock<IRepository>();
